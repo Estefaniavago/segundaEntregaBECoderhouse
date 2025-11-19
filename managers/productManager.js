@@ -1,10 +1,13 @@
+//Para usar promesas
 import fs from 'fs/promises';
 
+//para encapsular toda la logica lectura7escritura soobre products.json
 class ProductManager {
   constructor(path) {
     this.path = path;
   }
 
+  //Lee archivo y devuelve el array de productos 
   async readFile() {
     try {
       const data = await fs.readFile(this.path, "utf-8");
@@ -14,14 +17,17 @@ class ProductManager {
     }
   }
 
+  //Escribe mas prolijo
   async writeFile(data) {
     await fs.writeFile(this.path, JSON.stringify(data, null, 2));
   }
 
+  //Para obtener todos los productos
   async getProducts() {
     return await this.readFile();
   }
 
+  //Crea nuevo producto con id autoincremental
   async addProduct(product) {
     const products = await this.readFile();
     const newId = products.length > 0 ? products[products.length - 1].id + 1 : 1;
@@ -43,7 +49,7 @@ class ProductManager {
     return newProduct;
   }
 
-  // 🔥 AGREGADO
+  // Filtra por producto id y sobreecribe el archivo sin el producto
   async deleteProduct(id) {
     const products = await this.readFile();
     const filtered = products.filter(p => p.id !== id);
@@ -51,6 +57,6 @@ class ProductManager {
   }
 }
 
-// Exportación correcta
+// Exportación 
 export const productManager = new ProductManager("./data/products.json");
 export default ProductManager;
