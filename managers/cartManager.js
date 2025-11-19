@@ -1,4 +1,4 @@
-// managers/cartManager.js
+
 import fs from 'fs/promises';
 
 export default class CartManager {
